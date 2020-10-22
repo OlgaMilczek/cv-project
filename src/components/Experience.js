@@ -18,7 +18,7 @@ class Experience extends Component {
                 id: 0,
             },
             toEdit: true, 
-            workAdded: 0,
+            worksAdded: 0,
         }
         this.handleChange = this.handleChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -110,8 +110,31 @@ class Experience extends Component {
         })
     }
 
+    onDelete = (id) => {
+        this.setState(prevState => {
+            const newWorks = prevState.works.filter(work => {
+                return (work.id !== id)
+            })
+            if (prevState.works.length === 1) {
+                return {
+                    ...prevState,
+                    works: newWorks,
+                    toEdit: !prevState.toEdit
+                }
+            }
+            return {
+                ...prevState,
+                works: newWorks,
+            }
+        })
+    }
+
+
     render() {
         let content
+        let cancelButton = <button type="submit" className="btn btn-secondary btn-lg btn-block" onClick = {this.onClick} >
+                            Cancel
+                            </button>
         if (this.state.toEdit) {
             content = <div className="card-body">
                         <form onSubmit={this.onSubmit}>
@@ -172,12 +195,13 @@ class Experience extends Component {
                                 <button type="submit" className="btn btn-primary btn-lg btn-block">
                                     Submit
                                 </button>
+                                {(this.state.works.length > 0) ? cancelButton : null}
                             </div>
                         </form>
                     </div>
         } else {
             content = <div>
-                <ReadyCard places = {this.state.works} onClick = {this.onClick} onEdit = {this.onEdit}/>
+                <ReadyCard places = {this.state.works} onClick = {this.onClick} onEdit = {this.onEdit} onDelete = {this.onDelete }/>
             </div>
         }
         return (

@@ -9,22 +9,30 @@ function ReadyCard(props) {
 
     const places = props.places.map((place,id) => {
         return (
-            <div>
+            <div key = {place.id}>
                 {(id !== 0)? <hr></hr>: ''}
-                <div key = {place.id} className = 'position-relative' >
+                <div className = 'position-relative' >
                     <h4>{place.name} - <i>{place.positionOrDegree}</i></h4>
 
                         <p>From {moment(place.startDate).format('MMMM YYYY')} to {moment(place.endDate).format('MMMM YYYY')}.</p>
 
-                        <p>{place.detail}</p>
-                        <button 
-                                    type="submit" 
-                                    className="btn btn-primary position-absolute" 
-                                    onClick={() => {props.onEdit(place.id)}}
-                                    style = {buttonStyle}
+                        <p>{place.details}</p>
+                        <div className="position-absolute" style = {buttonStyle}>
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary" 
+                                onClick={() => {props.onEdit(place.id)}}
                                 >
                                 Edit
-                                </button>
+                            </button>
+                            <button 
+                                type="submit" 
+                                className="btn btn-danger ml-1" 
+                                onClick={() => {props.onDelete(place.id)}}                 
+                                >
+                                Delete
+                            </button>
+                        </div>
                 </div>
             </div>
         )

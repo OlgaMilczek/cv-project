@@ -23,6 +23,7 @@ class Education extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onEdit = this.onEdit.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     handleChange = (e) => {
@@ -110,8 +111,30 @@ class Education extends Component {
         })
     }
 
+    onDelete = (id) => {
+        this.setState(prevState => {
+            const newSchools = prevState.schools.filter(school => {
+                return (school.id !== id)
+            })
+            if (prevState.schools.length === 1) {
+                return {
+                    ...prevState,
+                    schools: newSchools,
+                    toEdit: !prevState.toEdit
+                }
+            }
+            return {
+                ...prevState,
+                schools: newSchools
+            }
+        })
+    }
+
     render() {
         let content
+        let cancelButton = <button type="submit" className="btn btn-secondary btn-lg btn-block" onClick = {this.onClick} >
+                            Cancel
+                            </button>
         if (this.state.toEdit) {
             content = <div className="card-body">
                         <form onSubmit={this.onSubmit}>
@@ -172,12 +195,13 @@ class Education extends Component {
                                 <button type="submit" className="btn btn-primary btn-lg btn-block">
                                     Submit
                                 </button>
+                                {(this.state.schools.length > 0) ? cancelButton : null}
                             </div>
                         </form>
                     </div>
         } else {
             content = <div>
-                <ReadyCard places = {this.state.schools} onClick = {this.onClick} onEdit = {this.onEdit}/>
+                <ReadyCard places = {this.state.schools} onClick = {this.onClick} onEdit = {this.onEdit} onDelete = {this.onDelete }/>
             </div>
         }
         return (
