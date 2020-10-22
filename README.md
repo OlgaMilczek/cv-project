@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## About application
+
+This is simple CV application made as my first react app. <br />
+It consists of three parts: General Info, Education end Experience. <br />
+Each of them can be added and edited independently. 
+
 ## Available Scripts
 
 In the project directory, you can run:
