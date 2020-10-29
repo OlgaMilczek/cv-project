@@ -24,6 +24,7 @@ class Education extends Component {
         this.onClick = this.onClick.bind(this);
         this.onEdit = this.onEdit.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.onCancel = this.onCancel.bind(this);
     }
 
     handleChange = (e) => {
@@ -111,6 +112,23 @@ class Education extends Component {
         })
     }
 
+    onCancel = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                toEdit: !prevState.toEdit,
+                school: {
+                    name: '',
+                    positionOrDegree: '', 
+                    startDate: '', 
+                    endDate: '',
+                    details: '',
+                    id: prevState.schoolsAdded
+                },
+            }
+        })
+    }
+
     onDelete = (id) => {
         this.setState(prevState => {
             const newSchools = prevState.schools.filter(school => {
@@ -132,7 +150,7 @@ class Education extends Component {
 
     render() {
         let content
-        let cancelButton = <button type="submit" className="btn btn-secondary btn-lg btn-block" onClick = {this.onClick} >
+        let cancelButton = <button type="submit" className="btn btn-secondary btn-lg btn-block" onClick = {this.onCancel} >
                             Cancel
                             </button>
         if (this.state.toEdit) {

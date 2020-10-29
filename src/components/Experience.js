@@ -23,6 +23,7 @@ class Experience extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onEdit = this.onEdit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
     }
 
     handleChange = (e) => {
@@ -82,6 +83,24 @@ class Experience extends Component {
         })
     }
 
+    onCancel = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                toEdit: !prevState.toEdit,
+                work: {
+                    name: '',
+                    positionOrDegree: '', 
+                    startDate: '', 
+                    endDate: '',
+                    details: '', 
+                    id: prevState.worksAdded,
+                },
+            }
+        })
+    }
+
+
     onEdit = (id) => {
         this.setState (prevState => {
             const editedWork = prevState.works.filter(work => {
@@ -132,7 +151,7 @@ class Experience extends Component {
 
     render() {
         let content
-        let cancelButton = <button type="submit" className="btn btn-secondary btn-lg btn-block" onClick = {this.onClick} >
+        let cancelButton = <button type="submit" className="btn btn-secondary btn-lg btn-block" onClick = {this.onCancel} >
                             Cancel
                             </button>
         if (this.state.toEdit) {

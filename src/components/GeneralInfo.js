@@ -1,136 +1,115 @@
-import React, {Component} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import ReadyCard from './GIReadyCard.js';
 import Input from './Input.js'
 
 import defaultPhoto from './defaultPhoto.js' 
 
-class GeneralInfo extends Component {
-    constructor() {
-        super();
+const GeneralInfo = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const[phone, setPhone] = useState('');
+    const[bio, setBio] = useState('');                                  
+    const[photo, setPhoto] = useState('');
 
-        this.state = {
-            name: '',
-            email: '', 
-            phone: '',
-            photo: defaultPhoto, 
-            bio: '',
-            toEdit: true,
-        }
-        this.onSubmit = this.onSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handlePhoto = this.handlePhoto.bind(this);
-    }
+    const [toEdit, setToEdit] = useState(true);
 
-    handleChange = (e) => {
-        const toChange = e.target.id
-        this.setState({
-            [toChange]: e.target.value,
-          });
-    }
-      
-    handlePhoto = (e) => {
-        if (e.target.value !== '') {
-            this.setState({
-                photo: e.target.value,
-              });
-        }
-    }
-
-    onSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        this.props.onSubmit('generalInfo');
-        this.setState (prevState => { 
-            return {
-                toEdit: !prevState.toEdit,
-                }
-        })
+        setToEdit(!toEdit)
     }
-    
-    render() {
-        if (this.state.toEdit) {
-            return (
-                <div className='col mx-auto mt-5'>
-                    <div className='card'>
-                        <div className='card-header'>
-                            <h3>General Information</h3>
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={this.onSubmit}>
-                                <div className='row'>
-                                    < Input 
-                                        name='name' 
-                                        nameValue = {this.state.name}
-                                        labelName='Full name'
-                                        onChange={this.handleChange}
-                                        type = 'text'
-                                        required = {true}
-                                    />
 
-                                    < Input 
-                                        name='phone' 
-                                        nameValue = {this.state.phone}
-                                        labelName='Phone number'
-                                        onChange={this.handleChange}
-                                        type = 'phone'
-                                        required = {true}
-                                    />
-                                    <div className="w-100"></div>
+    const handlePhoto = (e) => {
+        if (e.target.value !== '') {
+            setPhoto(e.target.value);
+        } else {
+            setPhoto(defaultPhoto);
+        }
 
-                                    < Input 
-                                        name='email' 
-                                        nameValue = {this.state.email}
-                                        labelName='E-mail'
-                                        onChange={this.handleChange}
-                                        type = 'email'
-                                        required = {true}
-                                    /> 
+    }
 
-                                    < Input 
-                                        name='photo' 
-                                        nameValue = {this.state.photo}
-                                        labelName='Photo URL'
-                                        onChange={this.handlePhoto}
-                                        type = 'url'
-                                        required = {false}
-                                        optional = {true}
-                                    /> 
+    if (toEdit) {
+        return (
+            <div className='col mx-auto mt-5'>
+                <div className='card'>
+                    <div className='card-header'>
+                        <h3>General Information</h3>
+                    </div>
+                    <div className="card-body">
+                        <form onSubmit={onSubmit}>
+                            <div className='row'>
+                                < Input 
+                                    name='name' 
+                                    nameValue = {name}
+                                    labelName='Full name'
+                                    onChange={(e) => {setName(e.target.value)}}
+                                    type = 'text'
+                                    required = {true}
+                                />
 
-                                </div>
-                                <div className='row'>
-                                    < Input 
-                                        name='bio' 
-                                        nameValue = {this.state.bio}
-                                        labelName='Bio'
-                                        onChange={this.handleChange}
-                                        required = {false}
-                                        optional = {true}
-                                        type = 'textarea'
-                                        maxLength ="200"
-                                    /> 
-                                </div>
+                                < Input 
+                                    name='phone' 
+                                    nameValue = {phone}
+                                    labelName='Phone number'
+                                    onChange={(e) => {setPhone(e.target.value)}}
+                                    type = 'phone'
+                                    required = {true}
+                                />
+                                <div className="w-100"></div>
 
-                                <div className="form-group">
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block">
-                                    Submit
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                                < Input 
+                                    name='email' 
+                                    nameValue = {email}
+                                    labelName='E-mail'
+                                    onChange={(e) => {setEmail(e.target.value)}}
+                                    type = 'email'
+                                    required = {true}
+                                /> 
+
+                                < Input 
+                                    name='photo' 
+                                    nameValue = {photo}
+                                    labelName='Photo URL'
+                                    onChange={handlePhoto}
+                                    type = 'url'
+                                    required = {false}
+                                    optional = {true}
+                                /> 
+
+                            </div>
+                            <div className='row'>
+                                < Input 
+                                    name='bio' 
+                                    nameValue = {bio}
+                                    labelName='Bio'
+                                    onChange={(e) => {setBio(e.target.value)}}
+                                    required = {false}
+                                    optional = {true}
+                                    type = 'textarea'
+                                    maxLength ="200"
+                                /> 
+                            </div>
+
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary btn-lg btn-block">
+                                Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            )
-        }
-
-        return (
-            <ReadyCard 
-                photo={this.state.photo} 
-                name={this.state.name} 
-                phone = {this.state.phone} 
-                email= {this.state.email} 
-                bio={this.state.bio}
-                onClick={this.onSubmit}/>
+            </div>
         )
     }
+
+    return (
+        <ReadyCard 
+            photo={photo} 
+            name={name} 
+            phone = {phone} 
+            email= {email} 
+            bio={bio}
+            onClick={onSubmit}/>
+    )
 }
 
 export default GeneralInfo;
