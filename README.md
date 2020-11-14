@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). <br />
 <br />
-https://olganowakowska.github.io/cv-project/
+https://olgamilczek.github.io/cv-project/
 
 ## About application
 
