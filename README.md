@@ -5,7 +5,7 @@ https://olgamilczek.github.io/cv-project/
 ## About application
 
 This is simple CV application made as my first react app. <br />
-It consists of three parts: General Info, Education end Experience. <br />
+It consists of three parts: General Info, Education and Experience. <br />
 Each of them can be added and edited independently. 
 
 ## Available Scripts
